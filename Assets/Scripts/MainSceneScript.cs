@@ -7,8 +7,13 @@ public class MainSceneScript : MonoBehaviour
 {
     public GameObject introPanel;
     public GameObject chapterHolderPanel;
-    public GameObject[] chapterPanels;
-    public GameObject playButtonObj, previousButtonObj, returnButtonObj, nextButtonObj, quitButtonObj;
+    public CalculatorSelectionClass[] chapters;
+    [Header("Buttons")]
+    public GameObject playButtonObj;
+    public GameObject previousButtonObj;
+    public GameObject returnButtonObj;
+    public GameObject nextButtonObj;
+    public GameObject quitButtonObj;
     private Button playButton, previousButton, returnButton, nextButton, quitButton;
     private int chapterPos = 0;
 
@@ -17,15 +22,34 @@ public class MainSceneScript : MonoBehaviour
         introPanel.SetActive(true);
         chapterHolderPanel.SetActive(false);
         SetButtons();
+        SetChapterParameters();
     }
 
     private void ClearPanels()
     {
-        for (int i = 0; i < chapterPanels.Length; i++)
+        previousButtonObj.SetActive(true);
+        nextButtonObj.SetActive(true);
+        for (int i = 0; i < chapters.Length; i++)
         {
-            chapterPanels[i].SetActive(false);
+            chapters[i].panel.SetActive(false);
         }
-        chapterPanels[chapterPos].SetActive(true);
+        if (chapterPos <= 0)
+        {
+            previousButtonObj.SetActive(false);
+        }
+        else if (chapterPos >= chapters.Length - 1)
+        {
+            nextButtonObj.SetActive(false);
+        }
+        chapters[chapterPos].panel.SetActive(true);
+    }
+
+    private void SetChapterParameters()
+    {
+        for (int i = 0; i < chapters.Length; i++)
+        {
+            chapters[i].SetParams();
+        }
     }
 
     private void SetButtons()
@@ -46,6 +70,8 @@ public class MainSceneScript : MonoBehaviour
     private void OnClickStart()
     {
         chapterPos = 0;
+        previousButtonObj.SetActive(false);
+        nextButtonObj.SetActive(true);
         introPanel.SetActive(false);
         chapterHolderPanel.SetActive(true);
         ClearPanels();
@@ -54,10 +80,8 @@ public class MainSceneScript : MonoBehaviour
     private void OnClickPrevious()
     {
         chapterPos--;
-        if(chapterPos <= 0)
-        {
-            previousButtonObj.SetActive(false);
-        }
+
+        ClearPanels();
     }
 
     private void OnClickReturn()
@@ -69,14 +93,13 @@ public class MainSceneScript : MonoBehaviour
     private void OnClickNext()
     {
         chapterPos++;
-        if (chapterPos >= chapterPanels.Length)
-        {
-            nextButtonObj.SetActive(false);
-        }
+
+        ClearPanels();
     }
 
     private void OnClickQuit()
     {
         Application.Quit();
     }
+
 }
