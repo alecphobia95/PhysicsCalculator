@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CalculatorSelectionClass.cs" />
+    <Compile Include="Assets\Scripts\Chapter1\Triangles\LineScript.cs" />
     <Compile Include="Assets\Scripts\MainSceneScript.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
